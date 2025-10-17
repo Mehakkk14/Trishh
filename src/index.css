@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* T'RISHH Premium Design System - All colors MUST be HSL */
+
+@layer base {
+  :root {
+    /* T'RISHH Brand Colors */
+    --background: 0 0% 100%;
+    --foreground: 240 86% 19%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 86% 19%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 86% 19%;
+
+    /* Primary: Dark Navy (#0E0E52) */
+    --primary: 240 86% 19%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 240 86% 25%;
+
+    /* Secondary: Clean whites and grays */
+    --secondary: 0 0% 98%;
+    --secondary-foreground: 240 86% 19%;
+
+    --muted: 240 10% 96%;
+    --muted-foreground: 240 20% 50%;
+
+    /* Accent: Premium Gold (#D4AF37) */
+    --accent: 45 69% 53%;
+    --accent-foreground: 240 86% 19%;
+    --accent-glow: 45 69% 60%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 20% 90%;
+    --input: 240 20% 90%;
+    --ring: 45 69% 53%;
+
+    --radius: 0.75rem;
+
+    /* Premium Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 50%, hsl(var(--accent) / 0.1) 100%);
+    
+    /* Premium Shadows */
+    --shadow-premium: 0 25px 50px -12px hsl(var(--primary) / 0.25);
+    --shadow-gold: 0 10px 30px -10px hsl(var(--accent) / 0.3);
+    --shadow-card: 0 4px 20px -4px hsl(var(--primary) / 0.1);
+    
+    /* Transitions */
+    --transition-premium: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 240 86% 19%;
+    --foreground: 0 0% 100%;
+
+    --card: 240 86% 19%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 86% 19%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 0% 100%;
+    --primary-foreground: 240 86% 19%;
+
+    --secondary: 240 75% 25%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 75% 25%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 45 69% 53%;
+    --accent-foreground: 240 86% 19%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 75% 25%;
+    --input: 240 75% 25%;
+    --ring: 45 69% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
+@layer components {
+  /* Premium Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+  
+  /* Hover Effects */
+  .hover-lift {
+    transition: var(--transition-smooth);
+    transform: translateZ(0); /* Force hardware acceleration */
+    backface-visibility: hidden; /* Prevent flickering */
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-4px) translateZ(0); /* Reduced lift distance */
+    box-shadow: var(--shadow-premium);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: var(--shadow-gold);
+  }
+  
+  /* Premium Gradients */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .text-gradient {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .font-body {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

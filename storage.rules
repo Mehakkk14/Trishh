@@ -1,0 +1,66 @@
+// Firebase Storage Security Rules for TRISHH Desire Shop
+// These rules secure file uploads and downloads
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             request.auth.token.admin == true;
+    }
+    
+    function isValidImageFile() {
+      return request.resource.contentType.matches('image/.*') &&
+             request.resource.size < 5 * 1024 * 1024; // 5MB limit
+    }
+
+    // Product Images - Public read, Admin write
+    match /products/{productId}/{imageFile} {
+      // Anyone can read product images
+      allow read: if true;
+      
+      // Only admins can upload product images
+      allow write: if isAdmin() && isValidImageFile();
+    }
+
+    // User Profile Images - User can upload own, everyone can read
+    match /users/{userId}/profile/{imageFile} {
+      // Anyone can read profile images
+      allow read: if true;
+      
+      // Users can upload their own profile images
+      allow write: if isAuthenticated() && 
+                      request.auth.uid == userId && 
+                      isValidImageFile();
+    }
+
+    // Admin Uploads - Admin only
+    match /admin/{document=**} {
+      allow read, write: if isAdmin();
+    }
+
+    // Site Assets - Public read, Admin write
+    match /site/{assetFile} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Temporary uploads - User specific, auto-cleanup
+    match /temp/{userId}/{file} {
+      allow read, write: if isAuthenticated() && 
+                            request.auth.uid == userId &&
+                            isValidImageFile();
+    }
+
+    // Deny all other operations
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

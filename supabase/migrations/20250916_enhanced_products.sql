@@ -1,0 +1,3 @@
+-- Enhanced Product Data for TRISHH E-commerce
+-- This file previously contained demo product data
+-- All demo products have been removed - you can now add your real products through the admin panel

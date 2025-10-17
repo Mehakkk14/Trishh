@@ -1,0 +1,151 @@
+// Firebase Firestore Security Rules for TRISHH Desire Shop
+// These rules secure the database for production deployment
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions for authentication and authorization
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             resource.data.role == 'admin' &&
+             request.auth.uid == resource.id;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isValidUser() {
+      return isAuthenticated() && 
+             request.auth.token.email_verified == true;
+    }
+
+    // Products Collection - Public read, Admin only write
+    match /products/{productId} {
+      // Anyone can read products (for shop display)
+      allow read: if true;
+      
+      // Only authenticated admins can create, update, delete products
+      allow write: if isAuthenticated() && 
+                      exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Categories Collection - Public read, Admin only write
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAuthenticated() && 
+                      exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                      get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Users Collection - User can read/write own data, Admins can read all
+    match /users/{userId} {
+      // Users can read and write their own data
+      allow read, write: if isOwner(userId);
+      
+      // Admins can read all user data (for admin panel)
+      allow read: if isAuthenticated() && 
+                     exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                     get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Orders Collection - User can read own orders, Admin can read all
+    match /orders/{orderId} {
+      // Users can read their own orders
+      allow read: if isAuthenticated() && 
+                     resource.data.customerId == request.auth.uid;
+      
+      // Users can create orders for themselves
+      allow create: if isAuthenticated() && 
+                       request.resource.data.customerId == request.auth.uid &&
+                       isValidUser();
+      
+      // Admins can read and update all orders (for order management)
+      allow read, update: if isAuthenticated() && 
+                             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Cart Collection - User can only access their own cart
+    match /carts/{userId} {
+      allow read, write: if isOwner(userId) && isValidUser();
+    }
+
+    // Wishlist Collection - User can only access their own wishlist
+    match /wishlists/{userId} {
+      allow read, write: if isOwner(userId) && isValidUser();
+    }
+
+    // Reviews Collection - Users can create reviews, read all reviews
+    match /reviews/{reviewId} {
+      // Anyone can read reviews
+      allow read: if true;
+      
+      // Authenticated users can create reviews for their own purchases
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid &&
+                       isValidUser();
+      
+      // Users can update/delete their own reviews
+      allow update, delete: if isAuthenticated() && 
+                               resource.data.userId == request.auth.uid;
+      
+      // Admins can delete inappropriate reviews
+      allow delete: if isAuthenticated() && 
+                       exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                       get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Newsletter Subscribers - Admin only access
+    match /newsletter/{email} {
+      // Only authenticated users can subscribe themselves
+      allow create: if isAuthenticated() && 
+                       request.resource.data.email == request.auth.token.email;
+      
+      // Users can unsubscribe themselves
+      allow delete: if isAuthenticated() && 
+                       resource.data.email == request.auth.token.email;
+      
+      // Admins can read all subscribers
+      allow read: if isAuthenticated() && 
+                     exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                     get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Admin Analytics - Admin only
+    match /analytics/{document=**} {
+      allow read, write: if isAuthenticated() && 
+                            exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Contact Messages - Admin read only, Users can create
+    match /contact/{messageId} {
+      // Users can create contact messages
+      allow create: if true; // Allow anonymous contact forms
+      
+      // Admins can read all contact messages
+      allow read: if isAuthenticated() && 
+                     exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                     get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Site Settings - Admin only
+    match /settings/{settingId} {
+      allow read, write: if isAuthenticated() && 
+                            exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Deny all other operations
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

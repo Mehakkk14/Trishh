@@ -1,0 +1,43 @@
+<!-- Placeholder SVG for TRISHH Hoodie Products -->
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="800" fill="#f8f9fa"/>
+  
+  <!-- Hoodie Silhouette -->
+  <g transform="translate(200, 150)">
+    <!-- Body -->
+    <path d="M100 200 Q100 180 120 180 L280 180 Q300 180 300 200 L300 450 Q300 470 280 470 L120 470 Q100 470 100 450 Z" fill="#2c3e50" stroke="#34495e" stroke-width="2"/>
+    
+    <!-- Hood -->
+    <path d="M120 180 Q200 120 280 180" fill="#2c3e50" stroke="#34495e" stroke-width="2"/>
+    
+    <!-- Sleeves -->
+    <ellipse cx="80" cy="250" rx="30" ry="80" fill="#2c3e50" stroke="#34495e" stroke-width="2"/>
+    <ellipse cx="320" cy="250" rx="30" ry="80" fill="#2c3e50" stroke="#34495e" stroke-width="2"/>
+    
+    <!-- Kangaroo Pocket -->
+    <rect x="140" y="280" width="120" height="80" rx="10" fill="none" stroke="#34495e" stroke-width="2" stroke-dasharray="5,5"/>
+    
+    <!-- TRISHH Logo -->
+    <text x="200" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ecf0f1">TRISHH</text>
+  </g>
+  
+  <!-- Product Info -->
+  <text x="400" y="650" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2c3e50">SIGNATURE NAVY HOODIE</text>
+  <text x="400" y="680" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#7f8c8d">Premium 320GSM Cotton Blend</text>
+  <text x="400" y="700" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#7f8c8d">Best Seller • ₹1,499</text>
+  
+  <!-- Size Guide -->
+  <g transform="translate(50, 50)">
+    <rect x="0" y="0" width="120" height="80" fill="#3498db" rx="5"/>
+    <text x="60" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">AVAILABLE SIZES</text>
+    <text x="60" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white">S M L XL XXL</text>
+  </g>
+  
+  <!-- Quality Badge -->
+  <g transform="translate(630, 50)">
+    <rect x="0" y="0" width="120" height="80" fill="#e74c3c" rx="5"/>
+    <text x="60" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" font-weight="bold">PREMIUM</text>
+    <text x="60" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">QUALITY</text>
+  </g>
+</svg>
