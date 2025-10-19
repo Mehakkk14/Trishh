@@ -204,3 +204,16 @@
     transform: scale(1);
   }
 }
+
+/* Navbar Logo Styles */
+.navbar-logo {
+  height: 45px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+}

@@ -40,13 +40,12 @@ export const Header = () => {
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-3">
-          <div className="h-12 w-12 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-xl">TH</span>
-          </div>
-          <span className="font-display text-2xl font-bold text-primary tracking-tight">
-            TRISHH
-          </span>
+        <Link to="/" className="flex items-center">
+          <img 
+            src="/images/logo.png" 
+            alt="TRISHH Logo" 
+            className="navbar-logo" 
+          />
         </Link>
 
         {/* Desktop Navigation */}
