@@ -49,8 +49,8 @@ export const AdminRoute = ({ children }: AdminRouteProps) => {
     hostname: window.location.hostname
   });
 
-  // Temporary: Allow access for any authenticated user on production (REMOVE AFTER SETUP)
-  const isTemporaryBypass = user && window.location.hostname.includes('vercel.app');
+  // Production security: Only allow proper admin access
+  const isTemporaryBypass = false; // SECURITY: Removed temporary bypass
   
   if (!canAccess && !allowDevelopmentAccess && !isTemporaryBypass) {
     return (
