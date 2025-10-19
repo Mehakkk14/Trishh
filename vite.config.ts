@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => ({
     minify: 'esbuild',
     sourcemap: mode === 'development',
     rollupOptions: {
+      external: [],
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
@@ -36,6 +37,10 @@ export default defineConfig(({ mode }) => ({
       },
     },
     chunkSizeWarningLimit: 1000,
+    // Ensure compatibility with different platforms
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
   },
   // Environment variable prefix
   envPrefix: 'VITE_',
