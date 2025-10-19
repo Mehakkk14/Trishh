@@ -61,6 +61,12 @@ export class SecurityService {
 
   // Check if user is admin
   isAdmin(): boolean {
+    // Hardcoded admin access for site owner
+    if (this.currentUser?.email === 'trishhna.studio@gmail.com') {
+      console.log('✅ Hardcoded admin access granted for site owner');
+      return true;
+    }
+    
     return this.isAuthenticated() && 
            this.userRole?.role === 'admin' &&
            this.userRole?.verified === true;

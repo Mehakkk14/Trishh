@@ -49,10 +49,13 @@ export const AdminRoute = ({ children }: AdminRouteProps) => {
     hostname: window.location.hostname
   });
 
+  // Hardcoded admin access for specific email (TEMPORARY SOLUTION)
+  const isHardcodedAdmin = user?.email === 'trishhna.studio@gmail.com';
+  
   // Production security: Only allow proper admin access
   const isTemporaryBypass = false; // SECURITY: Removed temporary bypass
   
-  if (!canAccess && !allowDevelopmentAccess && !isTemporaryBypass) {
+  if (!canAccess && !allowDevelopmentAccess && !isTemporaryBypass && !isHardcodedAdmin) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-8">
         <div className="max-w-md w-full">
