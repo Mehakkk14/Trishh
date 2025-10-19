@@ -26,12 +26,21 @@ export async function setupAdminUser(uid: string, email: string): Promise<boolea
       lastLogin: new Date()
     };
 
+    console.log('🔧 Setting admin data:', adminData);
     await setDoc(userRef, adminData, { merge: true });
     
-    console.log(`✅ Admin role granted to: ${email}`);
-    return true;
+    // Verify the data was written
+    const verifyDoc = await getDoc(userRef);
+    if (verifyDoc.exists() && verifyDoc.data().role === 'admin') {
+      console.log(`✅ Admin role successfully granted to: ${email}`);
+      return true;
+    } else {
+      console.error('❌ Failed to verify admin role was set');
+      return false;
+    }
   } catch (error) {
     console.error('❌ Error setting up admin user:', error);
+    console.error('Error details:', error);
     return false;
   }
 }

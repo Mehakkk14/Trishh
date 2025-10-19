@@ -67,6 +67,18 @@ export const AdminSetup = () => {
             <CardTitle>Admin Setup</CardTitle>
             <CardDescription>Please log in to set up admin access</CardDescription>
           </CardHeader>
+          <CardContent className="text-center">
+            <Button 
+              onClick={() => window.location.href = '/auth'}
+              className="w-full"
+              size="lg"
+            >
+              Go to Login Page
+            </Button>
+            <p className="text-sm text-muted-foreground mt-4">
+              Don't have an account? Sign up on the login page.
+            </p>
+          </CardContent>
         </Card>
       </div>
     );

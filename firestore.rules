@@ -46,8 +46,11 @@ service cloud.firestore {
 
     // Users Collection - User can read/write own data, Admins can read all
     match /users/{userId} {
-      // Users can read and write their own data
+      // Users can create and read/write their own data
       allow read, write: if isOwner(userId);
+      
+      // Allow authenticated users to create their user document
+      allow create: if isAuthenticated() && request.auth.uid == userId;
       
       // Admins can read all user data (for admin panel)
       allow read: if isAuthenticated() && 
