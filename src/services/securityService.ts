@@ -39,9 +39,14 @@ export class SecurityService {
   // Load user role from Firestore
   private async loadUserRole(uid: string): Promise<void> {
     try {
+      console.log('Loading user role for UID:', uid);
       const userDoc = await getDoc(doc(db, 'users', uid));
       if (userDoc.exists()) {
         this.userRole = userDoc.data() as UserRole;
+        console.log('User role loaded:', this.userRole);
+      } else {
+        console.log('No user document found for UID:', uid);
+        this.userRole = null;
       }
     } catch (error) {
       console.error('Error loading user role:', error);
