@@ -207,12 +207,13 @@
 
 /* Navbar Logo Styles */
 .navbar-logo {
-  height: 48px;
+  height: 50px;
   width: auto;
-  max-width: 200px;
+  max-width: 120px;
   display: block;
   object-fit: contain;
   transition: transform 0.2s ease-in-out;
+  filter: contrast(1.1) brightness(1.05);
 }
 
 .navbar-logo:hover {

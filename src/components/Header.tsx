@@ -40,10 +40,10 @@ export const Header = () => {
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center h-full">
+        <Link to="/" className="flex items-center">
           <img 
-            src="/images/logo.png" 
-            alt="TRISHH Logo" 
+            src="/images/th-logo.png" 
+            alt="TH Logo" 
             className="navbar-logo" 
           />
         </Link>

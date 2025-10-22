@@ -1,4 +1,4 @@
-// Security service for authentication and authorization
+  // Security service for authentication and authorization
 import { auth, db } from '@/integrations/firebase/firebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
 import { User } from 'firebase/auth';
