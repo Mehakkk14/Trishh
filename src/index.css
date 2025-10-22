@@ -207,9 +207,9 @@
 
 /* Navbar Logo Styles */
 .navbar-logo {
-  height: 50px;
+  height: 80px;
   width: auto;
-  max-width: 120px;
+  max-width: 200px;
   display: block;
   object-fit: contain;
   transition: transform 0.2s ease-in-out;
